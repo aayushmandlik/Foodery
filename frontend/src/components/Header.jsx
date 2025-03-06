@@ -1,8 +1,15 @@
 import React from "react";
+import { assets } from "../assets/assets";
+
+const backgroundImage =
+  window.innerWidth > 1024 ? assets.header_img : assets.header_img_mobile;
 
 const Header = () => {
   return (
-    <div className="lg:h-[38vw] lg:w-max mx-auto lg:bg-[url('./src/assets/header_img.png')] xs:bg-[url('./src/assets/header_img_mobile.png')] xs:w-full xs:h-[100vw] overflow-hidden xs:rounded-[10px] bg-no-repeat bg-contain fade-in-bottom">
+    <div
+      className="lg:h-[38vw] lg:w-max mx-auto xs:w-full xs:h-[100vw] overflow-hidden xs:rounded-[10px] bg-no-repeat bg-contain fade-in-bottom"
+      style={{ backgroundImage: `url(${backgroundImage})` }}
+    >
       <div className="lg:flex flex-col absolute gap-[1.5vw] items-start max-w-[23%] bottom-[5%] left-[2vw] xs:hidden animate-fade-in-bottom">
         {/* <h2 className="font-bold text-xl text-white">
           Delicious Meals Delivered to Your Doorstep
