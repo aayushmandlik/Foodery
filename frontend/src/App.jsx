@@ -9,6 +9,8 @@ import Footer from "./components/Footer";
 import "./index.css";
 import Verify from "./pages/Verify";
 import MyOrders from "./pages/MyOrders";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -21,6 +23,7 @@ const App = () => {
   }, [showLogin]);
   return (
     <>
+      <ToastContainer position="top-right" autoClose={5000} />
       {showLogin && <Login setShowLogin={setShowLogin} />}
       <div className="xs:w-[95%] sm:w-[95%] md:w-[95%] lg:w-[90%] mx-auto relative z-0">
         <div className="bg-cover bg-no-repeat">
