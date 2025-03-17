@@ -13,7 +13,14 @@ const port = 4000;
 
 // middleware
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://foodery-frontend.onrender.com",
+    credentials: true,
+    methods: "GET,POST,PUT,DELETE,OPTIONS",
+    allowedHeaders: "Content-Type",
+  })
+);
 
 // db connection
 connectDB();
