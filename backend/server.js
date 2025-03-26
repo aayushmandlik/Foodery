@@ -14,10 +14,14 @@ const port = 4000;
 // middleware
 app.use(express.json());
 const corsOptions = {
-  origin: ["https://foodery-frontend.onrender.com", "http://localhost:5173"],
+  origin: [
+    "https://foodery-frontend.onrender.com",
+    "https://foodery-admin.onrender.com",
+    "http://localhost:5173",
+  ],
   credentials: true,
   methods: "GET,POST,PUT,DELETE,OPTIONS",
-  allowedHeaders: ["Content-Type", "Authorization", "token"], // ✅ Include token
+  allowedHeaders: ["Content-Type", "Authorization", "token"],
   preflightContinue: false,
   optionsSuccessStatus: 204,
 };
