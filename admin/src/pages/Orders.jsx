@@ -84,11 +84,14 @@ const Orders = ({ url }) => {
                     </p>
                   </div>
                   <p className="font-medium border-1 border-solid rounded-sm p-0.5 my-2">
-                    Phone: {order.address.phone}
+                    Phone: {order.address.phone} (Email:{order.address.email})
+                  </p>
+                  <p className="font-medium border-1 border-solid rounded-sm p-0.5 my-2">
+                    Payment: {order.paymentMethod}
                   </p>
                 </div>
                 <p>Items: {order.items.length}</p>
-                <p>Amount: ${order.amount}</p>
+                <p>Amount: Rs{order.amount}</p>
                 <select
                   onChange={(event) => statusHandler(event, order._id)}
                   value={order.status}
@@ -153,7 +156,10 @@ const Orders = ({ url }) => {
                     </p>
                   </div>
                   <p className="font-medium border-1 border-solid rounded-sm p-0.5 my-2">
-                    Phone: {order.address.phone}
+                    Phone: {order.address.phone} (Email:{order.address.email})
+                  </p>
+                  <p className="font-medium border-1 border-solid rounded-sm p-0.5 my-2">
+                    Payment: {order.paymentMethod}
                   </p>
                 </div>
                 <p>Items: {order.items.length}</p>

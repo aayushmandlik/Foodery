@@ -5,6 +5,8 @@ import axios from "axios";
 const PlaceOrder = () => {
   const { getTotalCartAmount, token, food_list, cartItems, url } =
     useContext(StoreContext);
+  const [paymentMethod, setPaymentMethod] = useState("Online");
+
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
@@ -25,30 +27,46 @@ const PlaceOrder = () => {
 
   const placeOrder = async (event) => {
     event.preventDefault();
-    let orderItems = [];
-    food_list.map((item) => {
-      if (cartItems[item._id] > 0) {
-        let itemInfo = item;
-        itemInfo["quantity"] = cartItems[item._id];
-        orderItems.push(itemInfo);
-      }
-    });
+    let orderItems = food_list
+      .filter((item) => cartItems[item._id] > 0)
+      .map((item) => ({
+        ...item,
+        quantity: cartItems[item._id],
+      }));
 
     let orderData = {
       address: data,
       items: orderItems,
-      amount: getTotalCartAmount() + 2 + 2 + 5,
+      amount: getTotalCartAmount() + 20 + 5 + 10,
+      paymentMethod: paymentMethod,
     };
 
-    let response = await axios.post(url + "/api/order/place", orderData, {
-      headers: { token },
-    });
+    console.log("Order Data Sent to Backend:", orderData);
 
-    if (response.data.success) {
-      const { session_url } = response.data;
-      window.location.replace(session_url);
+    if (paymentMethod === "Online") {
+      // Process Online Payment
+      let response = await axios.post(url + "/api/order/place", orderData, {
+        headers: { token },
+        withCredentials: true,
+      });
+
+      if (response.data.success) {
+        window.location.replace(response.data.session_url);
+      } else {
+        alert("Error");
+      }
     } else {
-      alert("Error");
+      // Handle COD: Redirect to orders page
+      let response = await axios.post(url + "/api/order/cod", orderData, {
+        headers: { token },
+        withCredentials: true,
+      });
+
+      if (response.data.success) {
+        window.location.replace("/myorders");
+      } else {
+        alert("Error");
+      }
     }
   };
 
@@ -158,39 +176,66 @@ const PlaceOrder = () => {
           className="bg-white rounded-2xl p-3 lg:w-[40%] xs:w-[90%] xs:mx-auto"
           style={{ boxShadow: "0px 0px 15px -12px black" }}
         >
-          <div className="flex flex-col flex-1 gap-5">
-            <h2 className="font-medium text-xl">Bill Details:</h2>
-            <div className="flex flex-col gap-4">
-              <div className="flex justify-between">
-                <p className="text-start">Item Total</p>
-                <p>${getTotalCartAmount()}</p>
+          <div
+            className="bg-white rounded-2xl p-3 lg:w-full xs:w-[90%] xs:mx-auto mb-5"
+            style={{ boxShadow: "0px 0px 15px -12px black" }}
+          >
+            <div className="flex flex-col flex-1 gap-5">
+              <h2 className="font-medium text-xl">Bill Details:</h2>
+              <div className="flex flex-col gap-4">
+                <div className="flex justify-between">
+                  <p className="text-start">Item Total</p>
+                  <p>Rs{getTotalCartAmount()}</p>
+                </div>
+                <div className="flex justify-between">
+                  <p>Delivery Fee</p>
+                  <p>Rs{20}</p>
+                </div>
+                <hr />
+                <div className="flex justify-between">
+                  <p>Platform Fee</p>
+                  <p>Rs{5}</p>
+                </div>
+                <div className="flex justify-between">
+                  <p>GST and Restaurant Charges</p>
+                  <p>Rs{10}</p>
+                </div>
+                <hr />
+                <div className="flex justify-between">
+                  <b>Total Payment</b>
+                  <b>Rs{getTotalCartAmount() + 20 + 5 + 10}</b>
+                </div>
               </div>
-              <div className="flex justify-between">
-                <p>Delivery Fee</p>
-                <p>${2}</p>
-              </div>
-              <hr />
-              <div className="flex justify-between">
-                <p>Platform Fee</p>
-                <p>${2}</p>
-              </div>
-              <div className="flex justify-between">
-                <p>GST and Restaurant Charges</p>
-                <p>${5}</p>
-              </div>
-              <hr />
-              <div className="flex justify-between">
-                <b>Total Payment</b>
-                <b>${getTotalCartAmount() + 2 + 2 + 5}</b>
-              </div>
+              <button
+                type="submit"
+                className="border-none text-white bg-orange-600 py-3 px-0 rounded-md cursor-pointer"
+                style={{ width: "max(15vw,200px)" }}
+              >
+                Proceed To Payment
+              </button>
             </div>
-            <button
-              type="submit"
-              className="border-none text-white bg-orange-600 py-3 px-0 rounded-md cursor-pointer"
-              style={{ width: "max(15vw,200px)" }}
-            >
-              Proceed To Payment
-            </button>
+          </div>
+          <div className="flex flex-col gap-3">
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="Online"
+                checked={paymentMethod === "Online"}
+                onChange={(e) => setPaymentMethod(e.target.value)}
+              />
+              Pay Online
+            </label>
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="COD"
+                checked={paymentMethod === "COD"}
+                onChange={(e) => setPaymentMethod(e.target.value)}
+              />
+              Cash on Delivery (COD)
+            </label>
           </div>
         </div>
       </form>

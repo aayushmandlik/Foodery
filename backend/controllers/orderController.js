@@ -15,6 +15,7 @@ const placeOrder = async (req, res) => {
       items: req.body.items,
       amount: req.body.amount,
       address: req.body.address,
+      paymentMethod: req.body.paymentMethod,
     });
     await newOrder.save();
     await userModel.findByIdAndUpdate(req.body.userId, { cartData: {} });
@@ -27,7 +28,7 @@ const placeOrder = async (req, res) => {
           //   description: item.description,
           //   images: [item.image],
         },
-        unit_amount: item.price * 100 * 80,
+        unit_amount: item.price * 100,
       },
       quantity: item.quantity,
     }));
@@ -38,7 +39,29 @@ const placeOrder = async (req, res) => {
         product_data: {
           name: "Delivery Charges",
         },
-        unit_amount: 2 * 100 * 80,
+        unit_amount: 20 * 100,
+      },
+      quantity: 1,
+    });
+
+    line_items.push({
+      price_data: {
+        currency: "inr",
+        product_data: {
+          name: "Platform Charges",
+        },
+        unit_amount: 5 * 100,
+      },
+      quantity: 1,
+    });
+
+    line_items.push({
+      price_data: {
+        currency: "inr",
+        product_data: {
+          name: "GST & Rest Charges",
+        },
+        unit_amount: 10 * 100,
       },
       quantity: 1,
     });
@@ -50,6 +73,28 @@ const placeOrder = async (req, res) => {
       cancel_url: `${frontendUrl}/verify?success=false&orderId=${newOrder._id}`,
     });
     res.json({ success: true, session_url: session.url });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "Failed to place order" });
+  }
+};
+
+const placeCODOrder = async (req, res) => {
+  try {
+    const newOrder = new orderModel({
+      userId: req.body.userId,
+      items: req.body.items,
+      amount: req.body.amount,
+      address: req.body.address,
+      paymentMethod: req.body.paymentMethod,
+      payment: false, // COD orders start as unpaid
+      status: "Order Placed",
+    });
+
+    await newOrder.save();
+    await userModel.findByIdAndUpdate(req.body.userId, { cartData: {} });
+
+    res.json({ success: true, message: "Order Placed Successfully" });
   } catch (error) {
     console.log(error);
     res.json({ success: false, message: "Failed to place order" });
@@ -111,4 +156,11 @@ const updateStatus = async (req, res) => {
     res.json({ success: false, message: "Error" });
   }
 };
-export { placeOrder, verifyOrder, userOrders, listOrders, updateStatus };
+export {
+  placeOrder,
+  verifyOrder,
+  userOrders,
+  listOrders,
+  updateStatus,
+  placeCODOrder,
+};

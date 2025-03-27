@@ -32,6 +32,10 @@ const loginUser = async (req, res) => {
       success: true,
       message: "User found successfully",
       token: token,
+      user: {
+        name: user.name,
+        email: user.email,
+      },
     });
   } catch (error) {
     console.log(error);

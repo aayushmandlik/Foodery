@@ -765,7 +765,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = ({ setShowLogin }) => {
-  const { url, token, setToken } = useContext(StoreContext);
+  const { url, user, setUser, token, setToken } = useContext(StoreContext);
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -821,7 +821,9 @@ const Login = ({ setShowLogin }) => {
         toast.success(response.data.message, { autoClose: 5000 });
 
         setToken(response.data.token);
+        setUser(response.data.user);
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
 
         setTimeout(() => {
           setShowLogin(false);

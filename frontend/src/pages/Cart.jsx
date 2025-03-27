@@ -33,7 +33,7 @@
 //                 >
 //                   <img className="w-20 ml-2" src={item.image} alt="" />
 //                   <p className="text-start">{item.name}</p>
-//                   <p>${item.price}</p>
+//                   <p>Rs{item.price}</p>
 //                   <div className="flex gap-2 items-center border border-orange-600 w-min h-auto px-2 rounded-lg bg-orange-200">
 //                     <p
 //                       onClick={() => removeFromCart(item._id)}
@@ -49,7 +49,7 @@
 //                       +
 //                     </p>
 //                   </div>
-//                   <p>${cartItems[item._id] * item.price}</p>
+//                   <p>Rs{cartItems[item._id] * item.price}</p>
 //                   <img
 //                     onClick={() => deleteFromCart(item._id)}
 //                     className="w-5 h-5 cursor-pointer"
@@ -205,7 +205,7 @@ const Cart = () => {
                         alt=""
                       />
                       <p className="text-start">{item.name}</p>
-                      <p>${item.price}</p>
+                      <p>Rs{item.price}</p>
                       <div className="flex gap-2 items-center border border-orange-600 w-min h-auto px-2 rounded-lg bg-orange-200">
                         <p
                           onClick={() => removeFromCart(item._id)}
@@ -221,7 +221,7 @@ const Cart = () => {
                           +
                         </p>
                       </div>
-                      <p>${cartItems[item._id] * item.price}</p>
+                      <p>Rs{cartItems[item._id] * item.price}</p>
                       <img
                         onClick={() => deleteFromCart(item._id)}
                         className="w-5 h-5 cursor-pointer"
@@ -242,7 +242,7 @@ const Cart = () => {
                         alt=""
                       />
                       <p className="text-start">{item.name}</p>
-                      <p>${item.price}</p>
+                      <p>Rs{item.price}</p>
                       <div className="flex gap-2 items-center border border-orange-600 w-min h-auto px-1 rounded-lg bg-orange-200">
                         <p
                           onClick={() => removeFromCart(item._id)}
@@ -258,7 +258,7 @@ const Cart = () => {
                           +
                         </p>
                       </div>
-                      <p>${cartItems[item._id] * item.price}</p>
+                      <p>Rs{cartItems[item._id] * item.price}</p>
                     </div>
                   </div>
                 );
@@ -277,25 +277,25 @@ const Cart = () => {
             <div className="flex flex-col gap-4">
               <div className="flex justify-between">
                 <p className="text-start">Item Total</p>
-                <p>${getTotalCartAmount()}</p>
+                <p>Rs{getTotalCartAmount()}</p>
               </div>
               <div className="flex justify-between">
                 <p>Delivery Fee</p>
-                <p>${2}</p>
+                <p>Rs{20}</p>
               </div>
               <hr />
               <div className="flex justify-between">
                 <p>Platform Fee</p>
-                <p>${2}</p>
+                <p>Rs{5}</p>
               </div>
               <div className="flex justify-between">
                 <p>GST and Restaurant Charges</p>
-                <p>${5}</p>
+                <p>Rs{10}</p>
               </div>
               <hr />
               <div className="flex justify-between">
                 <b>Total Payment</b>
-                <b>${getTotalCartAmount() + 2 + 2 + 5}</b>
+                <b>Rs{getTotalCartAmount() + 20 + 5 + 10}</b>
               </div>
             </div>
             <button

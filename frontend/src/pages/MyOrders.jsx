@@ -58,7 +58,7 @@ const MyOrders = () => {
                     }
                   })}
                 </p>
-                <p>${order.amount}.00</p>
+                <p>Rs{order.amount}.00</p>
                 <p>Items: {order.items.length}</p>
                 <p>
                   <span className="text-orange-500 mr-1">&#x25cf;</span>
@@ -107,7 +107,7 @@ const MyOrders = () => {
                     }
                   })}
                 </p>
-                <p className="ml-4">${order.amount}.00</p>
+                <p className="ml-4">Rs{order.amount}.00</p>
                 <p>Items: {order.items.length}</p>
                 <p>
                   <span className="text-orange-500 mr-1">&#x25cf;</span>

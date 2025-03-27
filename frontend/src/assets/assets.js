@@ -69,6 +69,8 @@ import emptycart from "./emptycartimg.png";
 import shopbag from "./shopping-bag.png";
 import search from "./search.png";
 import usericon from ".//usericon.png";
+import myorders from "./myorders.png";
+import userlocation from "./user-location.png";
 
 import mission from "./mission.png";
 import vision from "./vision.png";
@@ -103,6 +105,8 @@ export const assets = {
   emptycart,
   shopbag,
   search,
+  myorders,
+  userlocation,
   usericon,
   mission,
   vision,

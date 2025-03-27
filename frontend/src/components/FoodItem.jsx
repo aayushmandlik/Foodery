@@ -220,7 +220,7 @@ const FoodItem = ({
           <p className="text-[#49557e] text-xs">{description}</p>
         </div>
         <div>
-          <p className="text-orange-600 font-medium text-xl mt-2">${price}</p>
+          <p className="text-orange-600 font-medium text-xl mt-2">Rs{price}</p>
           {!isInCart ? (
             <img
               className="absolute w-9 bottom-4 right-4 cursor-pointer rounded-full"

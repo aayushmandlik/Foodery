@@ -11,6 +11,17 @@ const StoreContextProvider = (props) => {
   const url = "https://foodery-yg59.onrender.com";
   const [token, setToken] = useState("");
   const [food_list, setFoodList] = useState([]);
+  const [user, setUser] = useState(() => {
+    return JSON.parse(localStorage.getItem("user")) || null;
+  });
+
+  useEffect(() => {
+    // If the user exists in localStorage, set it in state
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   const addToCart = async (itemId) => {
     if (!cartItems[itemId]) {
@@ -123,6 +134,8 @@ const StoreContextProvider = (props) => {
     url,
     token,
     setToken,
+    user,
+    setUser,
   };
 
   return (
